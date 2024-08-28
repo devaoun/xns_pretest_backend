@@ -1,0 +1,40 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique
+  email          String    @unique
+  hashedPassword String
+  voteStatus     Boolean   @default(false)
+  quotes         Quotes[]  @relation("UserQuotes")
+  votes          Votes[]   @relation("UserVotes")
+}
+
+model Quotes {
+  id         Int       @id @default(autoincrement())
+  title      String
+  votes      Int        @default(0)
+  created_at DateTime   @default(now())
+  user_id    Int
+  user       Users     @relation("UserQuotes", fields: [user_id], references: [id])
+  voters     Votes[]   @relation("QuoteVotes")
+}
+
+model Votes {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  quoteId   Int
+  user      Users   @relation("UserVotes", fields: [userId], references: [id])
+  quote     Quotes  @relation("QuoteVotes", fields: [quoteId], references: [id])
+
+  @@unique([userId, quoteId])
+}
+

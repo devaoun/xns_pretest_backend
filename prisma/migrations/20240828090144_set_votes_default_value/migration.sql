@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `quotes` MODIFY `votes` INTEGER NOT NULL DEFAULT 0;
