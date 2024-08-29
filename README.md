@@ -13,3 +13,10 @@ DATABASE_URL="mysql://username:password@localhost:3306/<ชื่อ Database>"
 
 JWT_SECRET=devaoun
 
+ใช้ mySql นะครับ
+
+=================================
+
+เมื่อกำหนดครบแล้วให้
+
+$ npx prisma migrate deploy
